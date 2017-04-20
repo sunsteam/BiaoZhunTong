@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.rainsome.www.smartstandard.ui.customview.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/standard_swipe_buttons"/>
+
+    <include layout="@layout/standard_swipe_content"/>
+
+</cn.rainsome.www.smartstandard.ui.customview.SwipeLayout>

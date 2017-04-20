@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_index_gallery_item_text"
+    android:layout_width="@dimen/dp_90"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dp_12"
+    android:paddingLeft="@dimen/dp_12"
+    android:paddingRight="@dimen/dp_12"
+    android:gravity="center"
+    android:drawablePadding="@dimen/dp_6"
+    tools:drawableTop="@drawable/home_icon_industry_jianshe"
+    tools:text="工程建设"
+    android:lines="2"
+    android:textColor="@color/home_industry_build_txt"
+    />

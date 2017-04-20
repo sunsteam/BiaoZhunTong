@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/dp_8"
+    android:paddingRight="@dimen/dp_8"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/home_ll_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/rectangle_r4_gray_99666666"
+        android:layout_marginRight="@dimen/dp_8"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/home_sort_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingBottom="@dimen/dp_4"
+            android:paddingLeft="@dimen/dp_12"
+            android:text="@string/sort_std_id"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:paddingRight="@dimen/dp_8"
+            />
+
+        <ImageView
+            android:id="@+id/home_sort_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_12"
+            android:src="@drawable/home_icon_sort_up"
+            />
+    </LinearLayout>
+
+
+
+    <HorizontalScrollView
+        android:layout_toRightOf="@id/home_ll_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:id="@+id/home_industries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"/>
+
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:id="@+id/home_frame_industry_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_choose_industy_btn_bg"
+            />
+
+        <ImageView
+            android:id="@+id/home_icon_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_4"
+            android:src="@drawable/home_icon_add_focus_industry"/>
+    </FrameLayout>
+
+</RelativeLayout>

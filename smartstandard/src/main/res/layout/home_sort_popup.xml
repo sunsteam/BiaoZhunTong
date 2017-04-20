@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_r4_gray_99666666"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/home_sort_list"
+        android:id="@+id/sort_concern"
+        android:text="@string/sort_concern"
+        />
+
+    <TextView
+        style="@style/home_sort_list"
+        android:id="@+id/sort_publish"
+        android:text="@string/sort_publish"
+        />
+    <TextView
+        style="@style/home_sort_list"
+        android:id="@+id/sort_apply"
+        android:text="@string/sort_apply"
+        />
+
+    <TextView
+        style="@style/home_sort_list"
+        android:id="@+id/sort_abolish"
+        android:text="@string/sort_abolish"
+        />
+
+    <TextView
+        style="@style/home_sort_list"
+        android:id="@+id/sort_std_id"
+        android:text="@string/sort_std_id"
+        />
+
+    <TextView
+        style="@style/home_sort_list"
+        android:id="@+id/sort_std_caption"
+        android:text="@string/sort_caption"
+        />
+</LinearLayout>

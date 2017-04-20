@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BiaoZhunTong.iml" filepath="$PROJECT_DIR$/BiaoZhunTong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartstandard/smartstandard.iml" filepath="$PROJECT_DIR$/smartstandard/smartstandard.iml" />
+    </modules>
+  </component>
+</project>

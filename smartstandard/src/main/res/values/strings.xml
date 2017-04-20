@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">标准通</string>
+    <string name="file_provider_auth">cn.rainsome.www.smartstandard.fileProvider</string>
+
+    <!--首页-->
+    <string name="home_choose_industry">选择行业</string>
+
+    <!--中部按钮组-->
+    <string name="home_catalog_text_btn">专业分类</string>
+    <string name="home_catalog_text_description">需要的信息</string>
+    <string name="home_library_text_btn">我的文库</string>
+    <string name="home_library_text_description">专业帮助</string>
+    <string name="home_industry_text_btn">行业动态</string>
+    <string name="home_industry_text_description">精准分析</string>
+    <string name="home_mandatory_text_btn">强制条文</string>
+    <string name="home_mandatory_text_description">禁止条款</string>
+
+    <!--首页排序-->
+    <string name="sort_concern">关注度</string>
+    <string name="sort_publish">发布日期</string>
+    <string name="sort_apply">实施日期</string>
+    <string name="sort_abolish">废止日期</string>
+    <string name="sort_std_id">标准编号</string>
+    <string name="sort_caption">标准名称</string>
+
+    <!--标准-->
+    <string name="replace_new_std">被%1$s替换</string>
+    <string name="replace_old_std">替换%1$s</string>
+
+
+</resources>

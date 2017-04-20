@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_list_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_bg_selector_bule_white"
+    android:orientation="vertical"
+    >
+
+    <cn.rainsome.www.smartstandard.ui.customview.MarqueeTextView
+        android:id="@+id/std_caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/standard_icon_publish"
+        android:drawablePadding="@dimen/dp_7"
+        android:ellipsize="marquee"
+        android:paddingLeft="@dimen/dp_6"
+        android:singleLine="true"
+        android:textColor="@color/black_333333"
+        android:textSize="@dimen/sp_13"
+        android:textStyle="bold"
+        tools:text="房屋建筑制图统一标准" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <RelativeLayout
+            android:id="@+id/tags_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="@dimen/dp_6">
+
+            <TextView
+                android:id="@+id/home_list_tag_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/standard_label_yellow"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxWidth="@dimen/dp_120"
+                android:paddingLeft="@dimen/dp_25"
+                android:paddingRight="@dimen/dp_10"
+                android:singleLine="true"
+                android:textColor="@color/black_545452"
+                android:textSize="@dimen/sp_12"
+                tools:text="标签标签标签标签" />
+
+            <ImageView
+                android:id="@+id/home_list_add_tag_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/standard_label_add"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/std_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_toLeftOf="@id/tags_layout"
+            android:textColor="#555555"
+            android:textSize="@dimen/sp_12"
+            tools:text="GB/T50001-2001" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layerType="software"
+        android:background="@drawable/common_dash_divider"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_9">
+
+        <TextView
+            android:id="@+id/home_list_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_6"
+            android:drawablePadding="@dimen/dp_8"
+            android:textSize="@dimen/sp_10"
+            tools:drawableLeft="@drawable/standard_icon_time_apply"
+            tools:text="2016.05.12"
+            tools:textColor="@color/std_time_apply" />
+
+        <LinearLayout
+            android:id="@+id/ll_formats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_products_clause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:src="@drawable/standard_state_structon" />
+
+            <ImageView
+                android:id="@+id/iv_products_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:src="@drawable/standard_state_image" />
+
+            <ImageView
+                android:id="@+id/iv_products_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:src="@drawable/standard_state_paper" />
+
+            <ImageView
+                android:id="@+id/iv_products_paid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:src="@drawable/standard_state_paid" />
+
+            <ImageView
+                android:id="@+id/iv_products_downloaded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:src="@drawable/standard_state_downloaded" />
+
+            <ImageView
+                android:id="@+id/iv_products_verify_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                tools:src="@drawable/standard_state_verified" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/std_replace_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_formats"
+            android:drawableLeft="@drawable/standard_state_replace"
+            android:drawablePadding="@dimen/dp_5"
+            android:padding="@dimen/dp_5"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp_11"
+            tools:text="替换GB88-2006" />
+    </RelativeLayout>
+</LinearLayout>

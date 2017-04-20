@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/home_advertisement_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_150"
+        android:layout_marginBottom="@dimen/dp_4"
+        />
+
+    <GridView
+        android:id="@+id/home_middle_grid"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="3dp"
+        android:numColumns="2"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_industry_recycler"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        />
+
+</LinearLayout>

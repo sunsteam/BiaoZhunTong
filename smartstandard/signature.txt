@@ -1,0 +1,16 @@
+package: cn.rainsome.www.smartstandard.BiaoZhunTong
+md5: 1d4f56da516ebbda667c8925221ae3b2
+
+微信平台
+AppID: wx0798e1bdcaeca37c
+AppSecret: 97c0f541dd6fca85582398214d7aff6e
+
+应用宝平台
+AppID: 1105736497
+AppKey: EtCtH6SFYQnmFU98
+
+
+SHA1: 93:EA:1E:39:70:40:64:BB:0E:F9:0A:09:FC:ED:EC:BD:21:17:27:6C
+SHA256: B9:62:10:82:D3:CC:AE:0F:56:BB:35:14:9F:A2:D2:95:56:6C:D8:42:13:30:05:9A:3B:CF:E1:03:F7:58:BA:FC
+签名算法名称: SHA256withRSA
+版本: 3

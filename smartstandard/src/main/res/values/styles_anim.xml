@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="fade_anim">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="anim_alpha_popuwindow" >
+        <item name="android:windowEnterAnimation">@anim/home_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/home_popup_exit</item>
+    </style>
+
+</resources>

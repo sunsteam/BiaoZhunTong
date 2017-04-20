@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#44a3cf</color>
+    <color name="colorPrimaryDark">#44a3cf</color>
+    <color name="colorAccent">#6656f2</color>
+
+
+
+    <!--2.0-->
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#ff0000</color>
+    <color name="black_333333">#333333</color>
+    <color name="half_transparent">#8f000000</color>
+    <color name="normal_bg">#efeff4</color>
+    <color name="divider_bg">#d8d8d8</color>
+
+    <color name="stroke_catalog">#0bb59b</color>
+    <color name="stroke_library">#0997fd</color>
+    <color name="stroke_industry">#b65bf6</color>
+    <color name="stroke_mandatory">#ff3b30</color>
+
+
+    <color name="std_time_publish">#FF9900</color>
+    <color name="std_time_apply">#3A5FCD</color>
+    <color name="std_time_abolish">#808080</color>
+
+    <color name="home_blue_0084ff">#0084ff</color>
+    <color name="home_red_e86d6d">#e86d6d</color>
+
+    <!--阅读背景色-->
+    <color name="bg_reading">#f2edc2</color>
+    <color name="bg_explian_on_yellow">#4a493b</color>
+    <color name="bg_explian_on_white">#FFF7B2</color>
+    <color name="reading_text_on_white">#404040</color>
+    <color name="reading_divider_bg">#e3c9ac</color>
+
+
+    <color name="black_3e3e3e">#3e3e3e</color>
+    <color name="black_text_4e5257">#4e5257</color>
+    <color name="gray_txt">#9b9b9b</color>
+    <color name="alpha_black_99666666">#99666666</color>
+    <color name="alpha_blue">#9955a1ed</color>
+    <color name="tag_orange">#ef8d4a</color>
+    <color name="black_545452">#545452</color>
+    <color name="black_555555">#555555</color>
+
+    <!-- 高级搜索 -->
+    <color name="grayblue">#44a3cf</color>
+
+    <!-- 购买标准币 -->
+    <color name="buy_coin_orange_text">#f74d25</color>
+    <color name="stroke_gray">#d3d3d3</color>
+    <color name="button_red">#e97066</color>
+    <!--搜索-->
+    <color name="search_text_color">#4e5257</color>
+    <color name="common_nav_color2">#EEEEEE</color>
+    <color name="label_text_color">#a0a0a0</color>
+    <!--书籍题录界面-->
+    <color name="book_nav_bg_color">#F1F1F1</color>
+    <color name="book_nav_fg_color">#373737</color>
+    <color name="book_nav_hr_color">#c1c1c1</color>
+    <color name="book_descr_fg_color">#5c5c5c</color>
+    <!--预览界面-->
+    <color name="gray_bcbcbc">#bcbcbc</color>
+    <color name="red_e66060">#e66060</color>
+    <!--订单详情-->
+    <color name="red_f26d5f">#f26d5f</color>
+    <color name="red_ff5e4a">#ff5e4a</color>
+    <color name="gray_text_9ca1a7">#9ca1a7</color>
+    <!--购物车-->
+    <color name="gray_text_777777">#777777</color>
+    <color name="red_eb5c3a">#eb5c3a</color>
+    <!--批注详情-->
+    <color name="gray_bfbfbf">#bfbfbf</color>
+    <color name="gray_e5e5e5">#e5e5e5</color>
+    <color name="yellow_f5cb39">#f5cb39</color>
+    <color name="red_ec6262">#ec6262</color>
+    <color name="green_79d9bd">#79d9bd</color>
+    <color name="purple_c3a6e6">#c3a6e6</color>
+    <color name="blue_5eb9f3">#5eb9f3</color>
+    <color name="brown_e4634e">#e4634e</color>
+    <color name="gray_999999">#999999</color>
+    <!--标准详情-->
+    <color name="brown_e56a61">#e56a61</color>
+    <color name="gray_a9a9a9">#a9a9a9</color>
+    <color name="gray_aaaaaa">#aaaaaa</color>
+
+    <color name="black_text_051b28">#051b28</color>
+
+    <!-- 标准颜色 -->
+    <color name="topical_uncarry">#ff9a1b</color>
+    <color name="topical_carry">#3a5fcd</color>
+    <color name="topical_abolish">#808080</color>
+
+    <color name="newsenior_serch">#0c69cb</color>
+
+    <!--我的积分-->
+    <color name="orange_faa100">#faa100</color>
+    <color name="green_33d137">#33d137</color>
+    <color name="orange_ff5900">#ff5900</color>
+</resources>
