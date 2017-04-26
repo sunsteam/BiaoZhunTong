@@ -10,7 +10,6 @@ import cn.rainsome.www.smartstandard.App;
 import cn.rainsome.www.smartstandard.BuildConfig;
 import cn.rainsome.www.smartstandard.net.http.Token;
 import cn.rainsome.www.smartstandard.utils.SpfUtils;
-import cn.yomii.www.frame.bean.request.RequestBean;
 
 /**
  * Created by Yomii on 2016/6/30.

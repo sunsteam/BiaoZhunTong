@@ -14,12 +14,11 @@ import java.util.List;
 
 import cn.rainsome.www.smartstandard.App;
 import cn.rainsome.www.smartstandard.Info;
-import cn.rainsome.www.smartstandard.MainApi;
 import cn.rainsome.www.smartstandard.bean.Auth;
 import cn.rainsome.www.smartstandard.bean.Standard;
-import cn.rainsome.www.smartstandard.net.http.JsonCallback;
-import okhttp3.Call;
-import okhttp3.Response;
+import cn.rainsome.www.smartstandard.bean.request.NumberRequest;
+import cn.rainsome.www.smartstandard.net.http.ApiWatcher;
+import cn.rainsome.www.smartstandard.net.http.HttpHelper;
 
 /**
  * 权限Dao
@@ -38,60 +37,61 @@ public class AuthDao {
 
 
     public void insert(final Auth outAuth) {
-        MainApi.standardDetail(outAuth.stdNo, this).execute(new JsonCallback<Auth>() {
-            @Override
-            public void onSuccess(Auth auth, Call call, Response response) {
-                SQLiteDatabase db = helper.getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put(DBConstants.AUTH_STDNO, outAuth.stdNo);
-                values.put(DBConstants.AUTH_UID, outAuth.uerId);
-                values.put(DBConstants.AUTH_UNO, outAuth.uerNo);
-                values.put(DBConstants.AUTH_STDTYPE, outAuth.stdType);
-                values.put(DBConstants.AUTH_STDSIZE, outAuth.stdSize);
-                values.put(DBConstants.AUTH_EDITTIME, outAuth.editTime);
-                values.put(DBConstants.AUTH_UNSAVE, outAuth.unSave);
-                //题录信息
-                values.put(DBConstants.AUTH_CAPTION, auth.caption);
-                values.put(DBConstants.AUTH_STDID, auth.stdid);
-                values.put(DBConstants.AUTH_FOREIGNCAPTION, auth.foreigncaption);
-                values.put(DBConstants.AUTH_REVISION, auth.revision);
-                values.put(DBConstants.AUTH_WRITEDEPT, auth.writedept);
-                values.put(DBConstants.AUTH_PUBLISHER, auth.publisher);
-                values.put(DBConstants.AUTH_PUBLISHEDWORD, auth.publishedword);
-                values.put(DBConstants.AUTH_PUBLISHDATE, auth.publishdate);
-                values.put(DBConstants.AUTH_PERFORMDATE, auth.performdate);
-                values.put(DBConstants.AUTH_EXPIREDDATE, auth.expireddate);
-                values.put(DBConstants.AUTH_FORMAT, auth.format);
+        HttpHelper.getApiMain().standardAuth(new NumberRequest("app_topical_detail", outAuth.stdNo))
+                .subscribe(new ApiWatcher<Auth>() {
+                    @Override
+                    public void onNext(Auth auth) {
+                        SQLiteDatabase db = helper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+                        values.put(DBConstants.AUTH_STDNO, outAuth.stdNo);
+                        values.put(DBConstants.AUTH_UID, outAuth.uerId);
+                        values.put(DBConstants.AUTH_UNO, outAuth.uerNo);
+                        values.put(DBConstants.AUTH_STDTYPE, outAuth.stdType);
+                        values.put(DBConstants.AUTH_STDSIZE, outAuth.stdSize);
+                        values.put(DBConstants.AUTH_EDITTIME, outAuth.editTime);
+                        values.put(DBConstants.AUTH_UNSAVE, outAuth.unSave);
+                        //题录信息
+                        values.put(DBConstants.AUTH_CAPTION, auth.caption);
+                        values.put(DBConstants.AUTH_STDID, auth.stdid);
+                        values.put(DBConstants.AUTH_FOREIGNCAPTION, auth.foreigncaption);
+                        values.put(DBConstants.AUTH_REVISION, auth.revision);
+                        values.put(DBConstants.AUTH_WRITEDEPT, auth.writedept);
+                        values.put(DBConstants.AUTH_PUBLISHER, auth.publisher);
+                        values.put(DBConstants.AUTH_PUBLISHEDWORD, auth.publishedword);
+                        values.put(DBConstants.AUTH_PUBLISHDATE, auth.publishdate);
+                        values.put(DBConstants.AUTH_PERFORMDATE, auth.performdate);
+                        values.put(DBConstants.AUTH_EXPIREDDATE, auth.expireddate);
+                        values.put(DBConstants.AUTH_FORMAT, auth.format);
 
-                if (auth.rpls != null && auth.rpls.size() > 0) {
-                    Auth.RplsEntity rplsEntity = auth.rpls.get(0);
-                    values.put(DBConstants.AUTH_RPLSTDNO, rplsEntity.no);
-                    values.put(DBConstants.AUTH_RPLSTDID, rplsEntity.stdid);
-                    values.put(DBConstants.AUTH_RELTYPE, rplsEntity.reltype);
-                }
+                        if (auth.rpls != null && auth.rpls.size() > 0) {
+                            Auth.RplsEntity rplsEntity = auth.rpls.get(0);
+                            values.put(DBConstants.AUTH_RPLSTDNO, rplsEntity.no);
+                            values.put(DBConstants.AUTH_RPLSTDID, rplsEntity.stdid);
+                            values.put(DBConstants.AUTH_RELTYPE, rplsEntity.reltype);
+                        }
 
-                //12.12更新
-                values.put(DBConstants.AUTH_CHIEFDEPT, auth.chiefdept);
-                values.put(DBConstants.AUTH_CANREAD, auth.canread);
-                values.put(DBConstants.AUTH_PRICE, auth.price);
-                values.put(DBConstants.AUTH_EPRICE, auth.eprice);
-                values.put(DBConstants.AUTH_DRAFTDEPTKEY, auth.draftdeptkey);
-                values.put(DBConstants.AUTH_CHIEFUNITKEY, auth.chiefunitkey);
-                values.put(DBConstants.AUTH_DRAFTDEPT, auth.draftdept);
-                values.put(DBConstants.AUTH_CHIEFUNIT, auth.chiefunit);
-                values.put(DBConstants.AUTH_BELONG, auth.belong);
-                values.put(DBConstants.AUTH_SUMMARY, auth.summary);
-                values.put(DBConstants.AUTH_ISPREFACE, auth.ispreface);
-                values.put(DBConstants.AUTH_STATUS, auth.status);
-                values.put(DBConstants.AUTH_LABELS, "");
+                        //12.12更新
+                        values.put(DBConstants.AUTH_CHIEFDEPT, auth.chiefdept);
+                        values.put(DBConstants.AUTH_CANREAD, auth.canread);
+                        values.put(DBConstants.AUTH_PRICE, auth.price);
+                        values.put(DBConstants.AUTH_EPRICE, auth.eprice);
+                        values.put(DBConstants.AUTH_DRAFTDEPTKEY, auth.draftdeptkey);
+                        values.put(DBConstants.AUTH_CHIEFUNITKEY, auth.chiefunitkey);
+                        values.put(DBConstants.AUTH_DRAFTDEPT, auth.draftdept);
+                        values.put(DBConstants.AUTH_CHIEFUNIT, auth.chiefunit);
+                        values.put(DBConstants.AUTH_BELONG, auth.belong);
+                        values.put(DBConstants.AUTH_SUMMARY, auth.summary);
+                        values.put(DBConstants.AUTH_ISPREFACE, auth.ispreface);
+                        values.put(DBConstants.AUTH_STATUS, auth.status);
+                        values.put(DBConstants.AUTH_LABELS, "");
 
-                long insert = db.insert(DBConstants.TB_AUTH, null, values);
+                        long insert = db.insert(DBConstants.TB_AUTH, null, values);
 
-                LogUtils.i("auth插入成功: " + (insert != -1));
-                LocalBroadcastManager.getInstance(App.getContext())
-                        .sendBroadcast(new Intent("action.update_cached"));
-            }
-        });
+                        LogUtils.i("auth插入成功: " + (insert != -1));
+                        LocalBroadcastManager.getInstance(App.getContext())
+                                .sendBroadcast(new Intent("action.update_cached"));
+                    }
+                });
     }
 
     /**
@@ -376,26 +376,26 @@ public class AuthDao {
             //                standard.revision = cursor.getInt(5);
             standard.rplstdno = cursor.getInt(11);
             standard.rplstdid = cursor.getString(12);
-            standard.chiefdept = cursor.getString(13);
+            //standard.chiefdept = cursor.getString(13);
             standard.publisher = cursor.getString(14);
             standard.publishedword = cursor.getString(15);
             standard.publishdate = cursor.getString(16);
             standard.performdate = cursor.getString(17);
             standard.expireddate = cursor.getString(18);
             standard.format = cursor.getInt(19);
-            standard.reltype = cursor.getInt(20);
+            //standard.reltype = cursor.getInt(20);
             //12.12更新
-            standard.chiefdept = cursor.getString(22);
+            //standard.chiefdept = cursor.getString(22);
             standard.canread = cursor.getInt(23);
             standard.price = cursor.getFloat(24);
             standard.eprice = cursor.getFloat(25);
-            standard.draftdeptkey = cursor.getString(26);
-            standard.chiefunitkey = cursor.getString(27);
-            standard.draftdept = cursor.getString(28);
-            standard.chiefunit = cursor.getString(29);
-            standard.belong = cursor.getString(30);
-            standard.summary = cursor.getString(31);
-            standard.ispreface = cursor.getInt(32);
+//            standard.draftdeptkey = cursor.getString(26);
+//            standard.chiefunitkey = cursor.getString(27);
+//            standard.draftdept = cursor.getString(28);
+//            standard.chiefunit = cursor.getString(29);
+//            standard.belong = cursor.getString(30);
+//            standard.summary = cursor.getString(31);
+//            standard.ispreface = cursor.getInt(32);
             standard.status = cursor.getInt(33);
             cursor.close();
         }

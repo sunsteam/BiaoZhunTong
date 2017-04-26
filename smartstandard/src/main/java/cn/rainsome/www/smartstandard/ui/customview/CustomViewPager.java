@@ -103,7 +103,7 @@ public class CustomViewPager extends RelativeLayout implements ViewPager.OnPageC
         viewPager.setOnPageChangeListener(this);
         ViewPagerAdapter adapter = new ViewPagerAdapter();
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(Integer.MAX_VALUE / 2);
+        viewPager.setCurrentItem(5000);
         viewPager.setOnTouchListener(this);
         this.addView(viewPager, viewPagerLp);
         //--------------------准备阶段----------------
@@ -153,7 +153,7 @@ public class CustomViewPager extends RelativeLayout implements ViewPager.OnPageC
         }
         if (viewPager != null) {
             viewPager.getAdapter().notifyDataSetChanged();
-            viewPager.setCurrentItem(Integer.MAX_VALUE / 2);
+            viewPager.setCurrentItem(5000);
             startPageScroll(5000);
         }
 

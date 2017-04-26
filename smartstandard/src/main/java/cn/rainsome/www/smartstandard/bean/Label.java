@@ -1,13 +1,11 @@
 package cn.rainsome.www.smartstandard.bean;
 
 
-import cn.yomii.www.frame.bean.ModelEntity;
-
 /**
  * 标签
  * Created by Yomii on 2016/8/9.
  */
-public class Label extends ModelEntity {
+public class Label {
 
     /**
      * 标签编号

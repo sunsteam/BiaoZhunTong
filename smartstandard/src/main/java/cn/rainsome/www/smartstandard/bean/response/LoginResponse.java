@@ -1,8 +1,8 @@
 package cn.rainsome.www.smartstandard.bean.response;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.google.gson.annotations.SerializedName;
 
-import cn.yomii.www.frame.bean.response.ResponseBean;
+import java.util.List;
 
 /**
  * 登录
@@ -21,12 +21,27 @@ public class LoginResponse extends ResponseBean {
 
     public String uid;
 
-    @JSONField (name = "issignined")
+    @SerializedName(value = "issignined")
     public int signIn;
 
 
-    public String companys;
+    public List<Company> companys;
 
+
+    public static class Company {
+
+        public int csmno;
+
+        public String csmcaption;
+
+        @Override
+        public String toString() {
+            return "Company{" +
+                    "csmno=" + csmno +
+                    ", csmcaption='" + csmcaption + '\'' +
+                    '}';
+        }
+    }
 
     @Override
     public String toString() {
@@ -37,7 +52,7 @@ public class LoginResponse extends ResponseBean {
                 ", no=" + no +
                 ", uid='" + uid + '\'' +
                 ", signIn=" + signIn +
-                ", companys='" + companys + '\'' +
+                ", companys=" + companys +
                 "} " + super.toString();
     }
 }

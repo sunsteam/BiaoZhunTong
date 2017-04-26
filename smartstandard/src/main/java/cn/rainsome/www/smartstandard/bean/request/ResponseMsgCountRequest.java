@@ -2,7 +2,6 @@ package cn.rainsome.www.smartstandard.bean.request;
 
 
 import cn.rainsome.www.smartstandard.net.http.Token;
-import cn.yomii.www.frame.bean.request.RequestBean;
 
 /**
  * 反馈条数

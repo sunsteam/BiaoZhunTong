@@ -107,7 +107,7 @@
 #---------------------------------------------------------------------------------------------------
 #---------------------------------实体类---------------------------------
 #修改成你对应的包名
--keep class [cn.rainsome.www.smartstandard.BiaoZhunTong.bean].** { *; }
+-keep class [cn.rainsome.www.smartstandard.bean].** { *; }
 
 #---------------------------------第三方包-------------------------------
 
@@ -251,7 +251,7 @@
 -keep class im.yixin.sdk.api.YXMessage {*;}
 -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 #下面中括号的地方需要要填你的包名
--keep public class [cn.rainsome.www.smartstandard.BiaoZhunTong].R$*{
+-keep public class [cn.rainsome.www.smartstandard].R$*{
     public static final int *;
     public static final String *;
 }

@@ -2,7 +2,6 @@ package cn.rainsome.www.smartstandard.bean.request;
 
 
 import cn.rainsome.www.smartstandard.BuildConfig;
-import cn.yomii.www.frame.bean.request.RequestBean;
 
 /**
  * 服务器INFO接口

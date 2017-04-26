@@ -2,16 +2,12 @@ package cn.rainsome.www.smartstandard.net.http;
 
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.apkfuns.logutils.LogUtils;
-import com.lzy.okgo.model.HttpParams;
 
 import java.io.IOException;
 
-import cn.rainsome.www.smartstandard.bean.request.LoginRequest;
-import cn.rainsome.www.smartstandard.bean.response.LoginResponse;
-import cn.yomii.www.frame.bean.response.ResponseBean;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -56,7 +52,7 @@ public class RefreshTokenInterceptor implements Interceptor {
             LogUtils.i("新body--" + newStr);
 
             Request newRequest = chain.request().newBuilder()
-                    .post(RequestBody.create(HttpParams.MEDIA_TYPE_JSON, newStr))
+                    .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), newStr))
                     .build();
             // 将原来的响应关闭
             originalResponse.body().close();
@@ -69,8 +65,9 @@ public class RefreshTokenInterceptor implements Interceptor {
      * 判断应答码是否是token过期
      */
     private boolean isTokenExpired(Response response) throws IOException {
-        ResponseBean bean = JSON.parseObject(response.body().string(), ResponseBean.class);
-        return bean.err == 9984;
+//        ResponseBean bean = JSON.parseObject(response.body().string(), ResponseBean.class);
+//        return bean.err == 9984;
+        return false;
     }
 
     /**
@@ -81,11 +78,12 @@ public class RefreshTokenInterceptor implements Interceptor {
      * @throws IOException
      */
     private String getTokenInfo() throws IOException {
-
-        Response r = HttpHelper.post(LoginRequest.getRetryLoginRequest(), "Interceptor").execute();
-        LoginResponse loginResponse = JSON.parseObject(r.body().string(), LoginResponse.class);
-        LogUtils.i("自动重新请求token结果", loginResponse);
-        return loginResponse.token;
+//
+//        Response r = HttpHelper.post(LoginRequest.getRetryLoginRequest(), "Interceptor").execute();
+//        LoginResponse loginResponse = JSON.parseObject(r.body().string(), LoginResponse.class);
+//        LogUtils.i("自动重新请求token结果", loginResponse);
+//        return loginResponse.token;
+        return "";
     }
 
 

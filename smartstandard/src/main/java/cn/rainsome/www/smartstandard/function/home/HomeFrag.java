@@ -29,18 +29,19 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.apkfuns.logutils.LogUtils;
-import com.lzy.okgo.OkGo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.rainsome.www.smartstandard.Info;
 import cn.rainsome.www.smartstandard.R;
-import cn.rainsome.www.smartstandard.adapter.WebLoader;
+import cn.rainsome.www.smartstandard.bean.request.ListRequestBean;
+import cn.rainsome.www.smartstandard.net.http.WebLoader;
 import cn.rainsome.www.smartstandard.adapter.list.HomeFunctionAdapter;
 import cn.rainsome.www.smartstandard.adapter.list.HomeListAdapter;
 import cn.rainsome.www.smartstandard.adapter.recycler.HomeIndustryAdapter;
@@ -48,12 +49,12 @@ import cn.rainsome.www.smartstandard.bean.Industry;
 import cn.rainsome.www.smartstandard.bean.ViewPagerBean;
 import cn.rainsome.www.smartstandard.bean.event.FreshHomeEvent;
 import cn.rainsome.www.smartstandard.bean.request.HomeStdRequest;
-import cn.rainsome.www.smartstandard.bean.response.IndustryResponse;
 import cn.rainsome.www.smartstandard.bean.response.InfoResponse;
+import cn.rainsome.www.smartstandard.bean.response.ListBean;
 import cn.rainsome.www.smartstandard.bean.response.NoticeCountResponse;
-import cn.rainsome.www.smartstandard.bean.response.StandardsResponse;
+import cn.rainsome.www.smartstandard.bean.response.Standards;
 import cn.rainsome.www.smartstandard.function.TemperActivity;
-import cn.rainsome.www.smartstandard.net.http.Patron;
+import cn.rainsome.www.smartstandard.net.http.ApiWatcher;
 import cn.rainsome.www.smartstandard.ui.AnimationListener;
 import cn.rainsome.www.smartstandard.ui.AnimatorListener;
 import cn.rainsome.www.smartstandard.ui.SmoothListView.SmoothListView;
@@ -63,9 +64,10 @@ import cn.rainsome.www.smartstandard.ui.recycler.SimpleItemTouchHelperCallback;
 import cn.rainsome.www.smartstandard.utils.PageUtils;
 import cn.rainsome.www.smartstandard.utils.ResUtils;
 import cn.rainsome.www.smartstandard.utils.ToastUtils;
-import cn.yomii.www.frame.adapter.Loader;
-import cn.yomii.www.frame.bean.request.ListRequestBean;
-import cn.yomii.www.frame.ui.fragment.BaseFragment;
+import cn.yomii.www.frame.adapter.ListLoader;
+import cn.yomii.www.frame.adapter.LoaderContract;
+import cn.yomii.www.frame.base.BaseFragment;
+import cn.yomii.www.frame.bean.ListRequest;
 
 /**
  * 首页 Fragment
@@ -75,25 +77,25 @@ import cn.yomii.www.frame.ui.fragment.BaseFragment;
 public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothListViewListener, View.OnClickListener {
 
 
-    @Bind(R.id.home_listView)
+    @BindView(R.id.home_listView)
     SmoothListView listView;
-    @Bind(R.id.bar_action_notice)
+    @BindView(R.id.bar_action_notice)
     ImageView btnNotice;
-    @Bind(R.id.bar_action_search)
+    @BindView(R.id.bar_action_search)
     ImageView btnSearch;
-    @Bind(R.id.home_icon_offline)
+    @BindView(R.id.home_icon_offline)
     ImageView iconOffline;
-    @Bind(R.id.bar_app_name)
+    @BindView(R.id.bar_app_name)
     TextView titleName;
-    @Bind(R.id.title_root)
+    @BindView(R.id.title_root)
     LinearLayout titleRoot;
 
     //选择行业部分
-    @Bind(R.id.btn_close_choose)
+    @BindView(R.id.btn_close_choose)
     ImageView btnCloseChoose;
-    @Bind(R.id.select_industry_container)
+    @BindView(R.id.select_industry_container)
     FrameLayout fragContainer;
-    @Bind(R.id.choose_industry_page)
+    @BindView(R.id.choose_industry_page)
     LinearLayout chooseIndustryPage;
 
     //我来组成头部
@@ -125,12 +127,15 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
     private int actionBarHeight;
     private boolean isSortAsc = true;
     private HomeRx homeRx;
+    private ListLoader<HomeStdRequest, Standards> loader;
+    private Unbinder bind;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.home_frag, container, false);
-        ButterKnife.bind(this, inflate);
+        bind = ButterKnife.bind(this, inflate);
         EventBus.getDefault().register(this);
+
 
         addListHead();
 
@@ -142,7 +147,6 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
         setCompanyNotice();
         setChooseIndustry();
         setChooseSort();
-
 
         return inflate;
     }
@@ -227,14 +231,15 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
         listView.setRefreshEnable(false);
         listView.setLoadMoreEnable(true);
         listView.setSmoothListViewListener(this);
-        Loader<HomeStdRequest, StandardsResponse> loader = new WebLoader<>();
-        loader.setRequestAndResponseType(new HomeStdRequest(0, 5, 0),StandardsResponse.class);
+        loader = new WebLoader<>(new ListRequestBean<HomeStdRequest>());
+        loader.setRequestAndResponseType(new HomeStdRequest(0, 5, 0), Standards.class);
         homeListAdapter = new HomeListAdapter(loader);
         listView.setAdapter(homeListAdapter);
-        loader.setLoadListener(new Loader.OnLoadAspectListener() {
-            @Override
-            public void onLoadBefore(int i, ListRequestBean listRequestBean) {
+        loader.setLoadListener(new LoaderContract.OnLoadAspectListener() {
 
+            @Override
+            public void onLoadBefore(int i, ListRequest listRequest) {
+                LogUtils.i("loadBeforeTime: " + System.currentTimeMillis());
             }
 
             @Override
@@ -243,6 +248,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
                     listView.getFootEditor().setDataState(i);
                     listView.stopLoadMore();
                 }
+                LogUtils.i("loadAfterTime: " + System.currentTimeMillis());
             }
         });
     }
@@ -375,8 +381,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
                         (Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                homeListAdapter.clearDataList();
-                getFilterList();
+                getFilterListAndReloadAllStandards();
 
                 ObjectAnimator translationY = ObjectAnimator.ofFloat(fragContainer, "translationY",
                         0, -panelHeight).setDuration(300);
@@ -392,9 +397,12 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
         });
     }
 
-    private void getFilterList() {
-        homeListAdapter.setIndustryNO(0);
-        homeRx.getIndustries().subscribe(new Patron<Industry>() {
+    private void getFilterListAndReloadAllStandards() {
+
+        loader.getRequest().trdno = 0;
+        clearAndLoadList();
+
+        homeRx.getIndustries().subscribe(new ApiWatcher<Industry>() {
             @Override
             public void onNext(Industry industry) {
 
@@ -411,12 +419,13 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
                 homeIndustries.addView(view);
             }
 
-            @Override
-            public void onCompleted() {
-                super.onCompleted();
-                listView.startLoadMore();
-            }
         });
+    }
+
+    private void clearAndLoadList() {
+        loader.resetToOriginIndex();
+        homeListAdapter.clearDataList();
+        listView.startLoadMore();
     }
 
 
@@ -426,10 +435,8 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
             public void onClick(View v) {
                 isSortAsc = !isSortAsc;
                 homeSortDirection.setImageResource(isSortAsc ? R.drawable.home_icon_sort_up : R.drawable.home_icon_sort_down);
-                if (homeListAdapter != null) {
-                    homeListAdapter.setSortAsAsc(isSortAsc);
-                    listView.startLoadMore();
-                }
+                loader.getRequest().desc = isSortAsc ? 0 : 1;
+                clearAndLoadList();
             }
         });
 
@@ -460,7 +467,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
     @Override
     protected void initData(View view, Bundle savedInstanceState) {
         homeRx = new HomeRx();
-        homeRx.getBanner().subscribe(new Patron<List<ViewPagerBean>>() {
+        homeRx.getBanner().subscribe(new ApiWatcher<List<ViewPagerBean>>() {
             @Override
             public void onNext(List<ViewPagerBean> viewPagerBeen) {
                 customViewPager.setData(viewPagerBeen);
@@ -468,7 +475,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
         });
 
         if (!Info.isTemperToken())
-            homeRx.getNewNotice().subscribe(new Patron<NoticeCountResponse>() {
+            homeRx.getNewNotice().subscribe(new ApiWatcher<NoticeCountResponse>() {
                 @Override
                 public void onNext(NoticeCountResponse noticeCountResponse) {
                     if (btnNotice != null)
@@ -476,7 +483,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
                 }
             });
 
-        homeRx.getServerEnable().subscribe(new Patron<InfoResponse>() {
+        homeRx.getServerEnable().subscribe(new ApiWatcher<InfoResponse>() {
             @Override
             public void onNext(InfoResponse infoResponse) {
                 hideReminder();
@@ -489,14 +496,14 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
             }
         });
 
-        homeRx.getHeadIndustries().subscribe(new Patron<IndustryResponse>() {
+        homeRx.getHeadIndustries().subscribe(new ApiWatcher<ListBean<Industry>>() {
             @Override
-            public void onNext(IndustryResponse industryResponse) {
-                headIndustryAdapter.setDataList(industryResponse.records);
+            public void onNext(ListBean<Industry> bean) {
+                headIndustryAdapter.setDataList(bean.getData());
             }
         });
 
-        getFilterList();
+        getFilterListAndReloadAllStandards();
 
     }
 
@@ -527,8 +534,8 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
 
     @Override
     public void onLoadMore() {
-        if (homeListAdapter != null)
-            homeListAdapter.getLoader().loadPage();
+        LogUtils.i("onLoadMoreTime: " + System.currentTimeMillis());
+        loader.load();
     }
 
 
@@ -537,8 +544,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
         if (isDetached())
             return;
 
-        homeListAdapter.clearDataList();
-        getFilterList();
+        getFilterListAndReloadAllStandards();
     }
 
     @Override
@@ -563,8 +569,8 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
             startActivity(new Intent(getContext(), TemperActivity.class/*IndustryStandardsActivity
                 .class*/));
         } else {
-            homeListAdapter.setIndustryNO(industryNo);
-            listView.startLoadMore();
+            loader.getRequest().trdno = industryNo;
+            clearAndLoadList();
         }
     }
 
@@ -607,10 +613,10 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
                     sortType = 6;
                     break;
             }
-            if (homeListAdapter != null) {
-                homeListAdapter.setSortBy(sortType);
-                listView.startLoadMore();
-            }
+
+            loader.getRequest().sortby = sortType;
+            clearAndLoadList();
+
             homeSortSelect.setText(t.getText().toString());
             popupWindow.dismiss();
         }
@@ -623,8 +629,7 @@ public class HomeFrag extends BaseFragment implements SmoothListView.ISmoothList
             popupWindow.dismiss();
         }
         super.onDestroyView();
-        OkGo.getInstance().cancelTag("home");
-        ButterKnife.unbind(this);
+        bind.unbind();
         EventBus.getDefault().unregister(this);
     }
 

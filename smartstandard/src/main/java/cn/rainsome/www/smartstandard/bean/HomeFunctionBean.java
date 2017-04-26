@@ -1,12 +1,10 @@
 package cn.rainsome.www.smartstandard.bean;
 
 
-import cn.yomii.www.frame.bean.ModelEntity;
-
 /**
  * Created by Yomii on 2016/6/14.
  */
-public class HomeFunctionBean extends ModelEntity {
+public class HomeFunctionBean {
 
     public int titleResId;
 

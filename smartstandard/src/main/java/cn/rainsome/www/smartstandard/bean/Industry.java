@@ -1,13 +1,11 @@
 package cn.rainsome.www.smartstandard.bean;
 
 
-import cn.yomii.www.frame.bean.ModelEntity;
-
 /**
  * 行业
  * Created by Yomii on 2016/6/14.
  */
-public class Industry extends ModelEntity {
+public class Industry {
 
     public int no;
 

@@ -2,8 +2,8 @@ package cn.rainsome.www.smartstandard.utils;
 
 import android.annotation.SuppressLint;
 
-import com.alibaba.fastjson.JSON;
 import com.apkfuns.logutils.LogUtils;
+import com.google.gson.Gson;
 
 import java.text.NumberFormat;
 
@@ -151,7 +151,7 @@ public class ConvertUtils {
      */
     public static <T> T parseToBean(String s, Class<T> clazz) {
         try{
-            return JSON.parseObject(s, clazz);
+            return new Gson().fromJson(s,clazz);
         }catch (RuntimeException e){
             LogUtils.e("reason"+e.toString());
             LogUtils.e("ErrorJsonString"+s);

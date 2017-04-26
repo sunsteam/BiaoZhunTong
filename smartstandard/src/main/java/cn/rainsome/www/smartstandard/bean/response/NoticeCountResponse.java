@@ -1,8 +1,6 @@
 package cn.rainsome.www.smartstandard.bean.response;
 
 
-import cn.yomii.www.frame.bean.response.ResponseBean;
-
 /**
  * 通知数量
  * Created by Yomii on 2016/3/12.

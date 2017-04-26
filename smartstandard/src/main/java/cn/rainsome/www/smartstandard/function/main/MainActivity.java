@@ -14,14 +14,13 @@ import android.widget.TextView;
 
 import cn.rainsome.www.smartstandard.App;
 import cn.rainsome.www.smartstandard.Info;
-import cn.rainsome.www.smartstandard.MainApi;
 import cn.rainsome.www.smartstandard.R;
+import cn.rainsome.www.smartstandard.bean.request.ResponseMsgCountRequest;
 import cn.rainsome.www.smartstandard.bean.response.MsgCountResponse;
-import cn.rainsome.www.smartstandard.net.http.JsonCallback;
+import cn.rainsome.www.smartstandard.net.http.ApiWatcher;
+import cn.rainsome.www.smartstandard.net.http.HttpHelper;
 import cn.rainsome.www.smartstandard.utils.DialogUtils;
-import cn.yomii.www.frame.ui.activity.BaseActivity;
-import okhttp3.Call;
-import okhttp3.Response;
+import cn.yomii.www.frame.base.BaseActivity;
 
 /**
  * 主页面
@@ -136,17 +135,20 @@ public class MainActivity extends BaseActivity {
         if (Info.isTemperToken())
             return;
 
-        MainApi.unreadResponse("main").execute(new JsonCallback<MsgCountResponse>() {
-            @Override
-            public void onSuccess(MsgCountResponse msgCountResponse, Call call, Response response) {
-                if (msgCountResponse.count > 0) {
-                    responseMes.setBackgroundResource(R.drawable.oval_ff0000);
-                    responseMes.setText(String.valueOf(msgCountResponse.count));
-                } else {
-                    responseMes.setBackgroundResource(0);
-                    responseMes.setText("");
-                }
-            }
-        });
+        HttpHelper.getApiMain().unreadResponse(new ResponseMsgCountRequest())
+                .subscribe(new ApiWatcher<MsgCountResponse>() {
+                    @Override
+                    public void onNext(MsgCountResponse value) {
+                        if (value.count > 0) {
+                            responseMes.setBackgroundResource(R.drawable.oval_ff0000);
+                            responseMes.setText(String.valueOf(value.count));
+                        } else {
+                            responseMes.setBackgroundResource(0);
+                            responseMes.setText("");
+                        }
+                    }
+
+                });
     }
+
 }

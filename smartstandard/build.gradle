@@ -8,16 +8,16 @@ bugly {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.setup.compileSdk
+    buildToolsVersion rootProject.setup.buildTools
 
     defaultConfig {
-        applicationId "cn.rainsome.www.smartstandard"
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion rootProject.setup.minSdk
+        targetSdkVersion rootProject.setup.targetSdk
         versionCode 32
         versionName "1.1.1"
 
+        applicationId "cn.rainsome.www.smartstandard"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
@@ -28,7 +28,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("C:/Users/Administrator/.android/debug.keystore")
+            storeFile file("debug.keystore")
         }
         relealse {
             File propFile = file('signing.properties');
@@ -56,7 +56,7 @@ android {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             versionNameSuffix ".2016.1228.10.test"
-            minifyEnabled false
+            minifyEnabled true
             zipAlignEnabled false
             shrinkResources false
             signingConfig signingConfigs.debug
@@ -72,32 +72,68 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名
             signingConfig signingConfigs.relealse
-            applicationIdSuffix 'BiaoZhunTong'
+            applicationIdSuffix '.BiaoZhunTong'
         }
+    }
+
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    dataBinding{
+        enabled true
     }
 }
 
 repositories { flatDir { dirs 'libs' } }
 
 dependencies {
-    compile 'com.android.support:design:25.1.0'
-    compile 'com.lzy.net:okgo:2.1.4'
-    compile 'com.lzy.net:okrx:0.1.2'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.alibaba:fastjson:1.2.8'
-    compile 'com.apkfuns.logutils:library:1.4.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.tencent.bugly:crashreport_upgrade:1.2.1'
-    compile(name: 'frame-release', ext: 'aar')
-
-
-    //compile 'com.github.chrisbanes.photoview:library:1.2.4'
-    //compile 'se.emilsjolander:stickylistheaders:2.7.0'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+
+    compile(name: 'frame-release', ext: 'aar')
+
+    //support
+    compile "com.android.support:appcompat-v7:$rootProject.versions.libSupport"
+    compile "com.android.support:recyclerview-v7:$rootProject.versions.libSupport"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //网络
+    compile "com.squareup.retrofit2:retrofit:$rootProject.versions.libRetrofit"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.versions.libRetrofit"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.versions.libRetrofit"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.versions.libOkhttp"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.versions.libOkhttp"
+    //rx
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.versions.libRxJava"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.versions.libRxJava"
+    compile "com.jakewharton.rxbinding2:rxbinding:$rootProject.versions.libRxBinding"
+    //依赖注入
+    compile "com.jakewharton:butterknife:$rootProject.versions.libButterKnife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.versions.libButterKnife"
+    //图片
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.apkfuns.logutils:library:1.4.0'
+    compile 'com.tencent.bugly:crashreport_upgrade:1.2.1'
+
+
+    //compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    //compile 'se.emilsjolander:stickylistheaders:2.7.0'
+
 }

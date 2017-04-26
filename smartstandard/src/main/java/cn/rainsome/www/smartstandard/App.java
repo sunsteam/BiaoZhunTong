@@ -13,7 +13,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 
 import com.apkfuns.logutils.LogUtils;
-import com.lzy.okgo.OkGo;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
@@ -22,23 +21,25 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 
 import cn.rainsome.www.smartstandard.bean.event.AppOkEvent;
+import cn.rainsome.www.smartstandard.bean.request.InfoRequest;
+import cn.rainsome.www.smartstandard.bean.request.LoginRequest;
+import cn.rainsome.www.smartstandard.bean.request.RequestBean;
 import cn.rainsome.www.smartstandard.bean.response.ConfigureResponse;
 import cn.rainsome.www.smartstandard.bean.response.InfoResponse;
 import cn.rainsome.www.smartstandard.bean.response.LoginResponse;
+import cn.rainsome.www.smartstandard.net.http.ApiWatcher;
 import cn.rainsome.www.smartstandard.net.http.HttpHelper;
+import cn.rainsome.www.smartstandard.net.http.Token;
 import cn.rainsome.www.smartstandard.net.http.Urls;
 import cn.rainsome.www.smartstandard.service.LocalPostilUploadService;
 import cn.rainsome.www.smartstandard.utils.SpfUtils;
 import cn.yomii.www.frame.ActivityLifeCallback;
-import okio.Buffer;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 import static cn.rainsome.www.smartstandard.ApiNeeds.Bugly_ID;
-import static cn.rainsome.www.smartstandard.ApiNeeds.CRT;
 
 /**
  * Application
@@ -141,14 +142,14 @@ public class App extends Application {
             Bugly.setIsDevelopmentDevice(this, BuildConfig.LOG_DEBUG);
 
 
-            OkGo.init(this);
-            OkGo.getInstance()
-                    .setConnectTimeout(HttpHelper.DEFAULT_MILLISECONDS)               //全局的连接超时时间
-                    .setReadTimeOut(HttpHelper.DEFAULT_MILLISECONDS)                  //全局的读取超时时间
-                    .setWriteTimeOut(HttpHelper.DEFAULT_MILLISECONDS)               //全局的写入超时时间
-                    //.debug("OkGo", Level.WARNING, true)                                //是否调试
-                    .setCertificates(new Buffer().writeUtf8(CRT).inputStream());     //证书
-                    //.addInterceptor(new RefreshTokenInterceptor());                 //自动刷新Token拦截器
+            //            OkGo.init(this);
+            //            OkGo.getInstance()
+            //                    .setConnectTimeout(HttpHelper.DEFAULT_MILLISECONDS)               //全局的连接超时时间
+            //                    .setReadTimeOut(HttpHelper.DEFAULT_MILLISECONDS)                  //全局的读取超时时间
+            //                    .setWriteTimeOut(HttpHelper.DEFAULT_MILLISECONDS)               //全局的写入超时时间
+            //                    //.debug("OkGo", Level.WARNING, true)                                //是否调试
+            //                    .setCertificates(new Buffer().writeUtf8(CRT).inputStream());     //证书
+            //                    //.addInterceptor(new RefreshTokenInterceptor());                 //自动刷新Token拦截器
 
             requestServerInfo();
 
@@ -159,32 +160,33 @@ public class App extends Application {
      * 获取服务器信息
      */
     private void requestServerInfo() {
-        MainApi.info("app")
-                .flatMap(new Func1<InfoResponse, Observable<LoginResponse>>() {
+        HttpHelper.getApiMain().info(new InfoRequest())
+                .flatMap(new Function<InfoResponse, Observable<LoginResponse>>() {
                     @Override
-                    public Observable<LoginResponse> call(InfoResponse infoResponse) {
+                    public Observable<LoginResponse> apply(InfoResponse infoResponse) throws Exception {
                         Urls.setMainUrl(infoResponse.host);
                         requestImageUrl();
-                        return MainApi.autoLogin("app");
+                        return HttpHelper.getApiMain().autoLogin(LoginRequest.getRetryLoginRequest());
                     }
                 })
-                .doOnNext(new Action1<LoginResponse>() {
+                .doOnNext(new Consumer<LoginResponse>() {
+
                     @Override
-                    public void call(LoginResponse response) {
+                    public void accept(LoginResponse response) throws Exception {
                         //填充用户信息
                         Info.fillUserInfoAfterLogin(response);
                         //cache到SPF
                         SharedPreferences.Editor editor =
                                 SpfUtils.getUser().edit().putInt(SpfUtils.USER_NO, response.no);
                         if (!Info.isTemperToken()) {
-                            editor.putString(SpfUtils.USER_COMPANIES, response.companys)
+                            editor.putString(SpfUtils.USER_COMPANIES, response.companys.get(0).csmcaption)
                                     .putString(SpfUtils.USER, response.fullname);
                         }
                         editor.apply();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<LoginResponse>() {
+                .subscribe(new ApiWatcher<LoginResponse>() {
 
                     @Override
                     public void onNext(LoginResponse response) {
@@ -198,30 +200,31 @@ public class App extends Application {
                     }
 
                     @Override
-                    public void onCompleted() {
-                        EventBus.getDefault().post(new AppOkEvent(System.currentTimeMillis() - startTime));
-                    }
-
-                    @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        super.onError(e);
                         loadCacheUserInfo();
                         EventBus.getDefault().post(new AppOkEvent(System.currentTimeMillis() - startTime));
                     }
 
+                    @Override
+                    public void onComplete() {
+                        EventBus.getDefault().post(new AppOkEvent(System.currentTimeMillis() - startTime));
+                    }
                 });
 
 
     }
 
     private void requestImageUrl() {
-        MainApi.configure("app").subscribe(new Action1<ConfigureResponse>() {
-            @Override
-            public void call(ConfigureResponse configureResponse) {
-                Urls.setImageUrl(configureResponse.sdcpic);
-                Urls.setMandatoryUrl(configureResponse.mdypic);
-            }
-        });
+        HttpHelper.getApiMain().configure(new RequestBean("configure", Token.getToken()))
+                .subscribe(new Consumer<ConfigureResponse>() {
+
+                    @Override
+                    public void accept(ConfigureResponse configureResponse) throws Exception {
+                        Urls.setImageUrl(configureResponse.sdcpic);
+                        Urls.setMandatoryUrl(configureResponse.mdypic);
+                    }
+                });
     }
 
     private void loadCacheUserInfo() {

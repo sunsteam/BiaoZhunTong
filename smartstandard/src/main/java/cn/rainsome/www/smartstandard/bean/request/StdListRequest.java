@@ -1,13 +1,12 @@
 package cn.rainsome.www.smartstandard.bean.request;
 
 import cn.rainsome.www.smartstandard.net.http.Token;
-import cn.yomii.www.frame.bean.request.ListRequestBean;
 
 /**
  * 用于标准列表的请求
  * Created by Yomii on 2016/3/13.
  */
-public class StdListRequest extends ListRequestBean {
+public class StdListRequest extends RequestBean {
 
 
 
@@ -25,9 +24,14 @@ public class StdListRequest extends ListRequestBean {
      */
     public int formatsort = 0;
 
-    public StdListRequest(String cmd, int sortby, int desc){
+    /**
+     * 0 正序排列  1 倒序排列
+     */
+    public int desc;
+
+    public StdListRequest(String cmd, int sortBy, int desc){
         super(cmd, Token.getToken());
-        this.sortby = sortby;
+        this.sortby = sortBy;
         this.desc = desc;
     }
 

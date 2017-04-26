@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.yomii.www.frame.ui.fragment.BaseFragment;
+import cn.yomii.www.frame.base.BaseFragment;
 
 
 /**

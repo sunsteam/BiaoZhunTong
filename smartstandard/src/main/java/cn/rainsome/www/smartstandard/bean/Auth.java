@@ -4,8 +4,7 @@ package cn.rainsome.www.smartstandard.bean;
 import java.util.List;
 
 import cn.rainsome.www.smartstandard.Info;
-import cn.yomii.www.frame.bean.ModelEntity;
-import cn.yomii.www.frame.bean.response.ResponseBean;
+import cn.rainsome.www.smartstandard.bean.response.ResponseBean;
 
 
 /**
@@ -161,14 +160,14 @@ public class Auth extends ResponseBean {
     public int ispreface;
 
     /**
-     *标准收录状态: 1 未收录 2信息录入 3制作中 4草稿 5发布
-     *
-     *  >= 5 表示已审 else 未审
+     * 标准收录状态: 1 未收录 2信息录入 3制作中 4草稿 5发布
+     * <p>
+     * >= 5 表示已审 else 未审
      */
     public int status;
 
 
-    public static class RplsEntity extends ModelEntity {
+    public static class RplsEntity {
         public int no;
         public String stdid;
         public String caption;
@@ -203,12 +202,11 @@ public class Auth extends ResponseBean {
     }
 
 
-
     //----------------------------------元数据---------------------------------------//
 
     /**
      * 未缓存的图片链接集合, 用;分割 (结构化数据中的所有图片缓存到本地) 12/20 新增
-     *
+     * <p>
      * "" 表示完整, 包含内容表示不完整
      */
     public String unSave;

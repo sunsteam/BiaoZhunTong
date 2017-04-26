@@ -2,7 +2,7 @@ package cn.rainsome.www.smartstandard.net.http;
 
 
 import cn.rainsome.www.smartstandard.BuildConfig;
-import cn.yomii.www.frame.bean.response.ResponseBean;
+import cn.rainsome.www.smartstandard.bean.response.ResponseBean;
 
 /**
  * Created by Yomii on 2017/2/9.
@@ -13,12 +13,12 @@ public class Urls {
     /**
      * 【正式地址】：正式服务器地址。
      */
-    private static final String URL_FORMAL = "http://rsi.weboos.com:10101/rsi/";
+    private static final String URL_FORMAL = "http://rsi.weboos.com:10101/";
     //public static final String URL_FORMAL = "http://192.168.0.231:10101/rsi_dev/";
     /**
      * 开发、调试接口地址（内网、公网同时有效）
      */
-    private static final String URL_DEBUG = "http://rsi.weboos.com:10101/rsi/";
+    private static final String URL_DEBUG = "http://rsi.weboos.com:10101/";
     //public static final String URL_DEBUG = "http://192.168.0.231:10101/rsi_dev/";
     /**
      * 模拟接口地址（内网、公网同时有效）

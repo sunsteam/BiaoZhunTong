@@ -21,11 +21,11 @@ import cn.rainsome.www.smartstandard.App;
 import cn.rainsome.www.smartstandard.R;
 import cn.rainsome.www.smartstandard.bean.Industry;
 import cn.rainsome.www.smartstandard.bean.response.NumberResponse;
-import cn.rainsome.www.smartstandard.net.http.Patron;
+import cn.rainsome.www.smartstandard.net.http.ApiWatcher;
 import cn.rainsome.www.smartstandard.ui.recycler.ItemTouchHelperAdapter;
-import cn.yomii.www.frame.adapter.recycler.BaseRecyclerAdapter;
-import cn.yomii.www.frame.adapter.recycler.recyclerholder.BaseRecyclerHolder;
-import rx.Observable;
+import cn.yomii.www.frame.base.BaseRecyclerAdapter;
+import cn.yomii.www.frame.base.BaseRecyclerHolder;
+import io.reactivex.Observable;
 
 public class HomeIndustryAdapter extends BaseRecyclerAdapter<Industry>
         implements ItemTouchHelperAdapter {
@@ -43,9 +43,10 @@ public class HomeIndustryAdapter extends BaseRecyclerAdapter<Industry>
 
     /**
      * 更新选中行业 行业号>0表示需要选中, <=0表示全部不选中
+     *
      * @param industryNo 行业节点号
      */
-    public void updateIndustriesSelected(int industryNo){
+    public void updateIndustriesSelected(int industryNo) {
         int index = states.indexOfValue(true);
         if (index >= 0)
             states.put(states.keyAt(index), false);
@@ -87,7 +88,7 @@ public class HomeIndustryAdapter extends BaseRecyclerAdapter<Industry>
         return true;
     }
 
-    public String getCopy(){
+    public String getCopy() {
         String temper = serialize();
         return TextUtils.equals(temper, originCopy) ? "" : temper;
     }
@@ -95,12 +96,13 @@ public class HomeIndustryAdapter extends BaseRecyclerAdapter<Industry>
     public void sync(Observable<NumberResponse> observable) {
         final String temper = serialize();
         if (!TextUtils.equals(temper, originCopy)) {
-            observable.subscribe(new Patron<NumberResponse>() {
+            observable.subscribe(new ApiWatcher<NumberResponse>() {
                 @Override
                 public void onNext(NumberResponse numberResponse) {
                     originCopy = temper;
                     LogUtils.i("位置保存成功, 返回no = " + numberResponse.no);
                 }
+
             });
         }
     }

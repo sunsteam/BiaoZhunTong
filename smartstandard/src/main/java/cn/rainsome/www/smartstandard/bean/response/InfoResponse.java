@@ -1,8 +1,6 @@
 package cn.rainsome.www.smartstandard.bean.response;
 
 
-import cn.yomii.www.frame.bean.response.ResponseBean;
-
 /**
  * 服务器INFO接口
  * Created by Yomii on 2016/9/1.

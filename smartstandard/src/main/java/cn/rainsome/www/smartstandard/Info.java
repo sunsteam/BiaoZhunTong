@@ -102,7 +102,7 @@ public class Info {
         setPsnUid(response.uid);
         setKind(response.kind);
         setUser(response.fullname);
-        setCompany(response.companys);
+        setCompany(response.companys.get(0).csmcaption);
         setSignIn(response.signIn);
     }
 

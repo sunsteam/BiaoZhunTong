@@ -1,8 +1,6 @@
 package cn.rainsome.www.smartstandard.bean.response;
 
 
-import cn.yomii.www.frame.bean.response.ResponseBean;
-
 /**
  * 图片类地址的封装
  * Created by Yomii on 2016/9/1.
