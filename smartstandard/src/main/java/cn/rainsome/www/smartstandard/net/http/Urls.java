@@ -35,7 +35,7 @@ public class Urls {
     /**
      * API地址
      */
-    private static String mainUrl = BuildConfig.LOG_DEBUG ? URL_DEBUG : URL_FORMAL;
+    private static String mainUrl = BuildConfig.DEBUG ? URL_DEBUG : URL_FORMAL;
 
     public static String getMainUrl() {
         return mainUrl;

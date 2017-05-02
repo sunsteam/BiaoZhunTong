@@ -1,6 +1,5 @@
 package cn.rainsome.www.smartstandard.net.http;
 
-import com.android.databinding.library.BuildConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -8,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import cn.rainsome.www.smartstandard.Api;
 import cn.rainsome.www.smartstandard.ApiMain;
+import cn.rainsome.www.smartstandard.BuildConfig;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -49,7 +49,7 @@ public class HttpHelper {
 //        });
         if (BuildConfig.DEBUG)
             okHttpBuilder.addInterceptor(new HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BASIC));
+                    .setLevel(HttpLoggingInterceptor.Level.BODY));
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
         okHttpClient = okHttpBuilder.build();

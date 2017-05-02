@@ -164,7 +164,7 @@ public class App extends Application {
                 .flatMap(new Function<InfoResponse, Observable<LoginResponse>>() {
                     @Override
                     public Observable<LoginResponse> apply(InfoResponse infoResponse) throws Exception {
-                        Urls.setMainUrl(infoResponse.host);
+                        //Urls.setMainUrl(infoResponse.host); 与Retrofit不兼容
                         requestImageUrl();
                         return HttpHelper.getApiMain().autoLogin(LoginRequest.getRetryLoginRequest());
                     }
